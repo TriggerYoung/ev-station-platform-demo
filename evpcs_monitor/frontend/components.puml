@@ -1,0 +1,124 @@
+@startuml
+skinparam componentStyle rectangle
+component "analysis_report/AnalysisReport" as analysis_report_AnalysisReport
+component "analysis_report/BarChart" as analysis_report_BarChart
+component "analysis_report/ClustersPieChart" as analysis_report_ClustersPieChart
+component "analysis_report/DataTable" as analysis_report_DataTable
+component "analysis_report/FileUpload" as analysis_report_FileUpload
+component "analysis_report/FutureForecastChart" as analysis_report_FutureForecastChart
+component "analysis_report/InfoHelpButton" as analysis_report_InfoHelpButton
+component "analysis_report/LineChart" as analysis_report_LineChart
+component "analysis_report/ModelEvaluationChart" as analysis_report_ModelEvaluationChart
+component "analysis_report/Selections" as analysis_report_Selections
+component "business/Business" as business_Business
+component "community/Community" as community_Community
+component "community/IndustryNews" as community_IndustryNews
+component "community/user_comments/CommentItem" as community_user_comments_CommentItem
+component "community/user_comments/CommentList" as community_user_comments_CommentList
+component "community/user_comments/CommentModal" as community_user_comments_CommentModal
+component "community/user_comments/HotComments" as community_user_comments_HotComments
+component "community/user_comments/Messages" as community_user_comments_Messages
+component "community/user_comments/MyComments" as community_user_comments_MyComments
+component "community/user_comments/UserComments" as community_user_comments_UserComments
+component "community/user_comments/WordCloudView" as community_user_comments_WordCloudView
+component "data_panel/DataPanel" as data_panel_DataPanel
+component "data_panel/OccupancyRanking" as data_panel_OccupancyRanking
+component "data_panel/PriceTrend" as data_panel_PriceTrend
+component "data_panel/RealTimeOccupancy" as data_panel_RealTimeOccupancy
+component "data_panel/RealTimeVolume" as data_panel_RealTimeVolume
+component "data_panel/ShenZhenMap" as data_panel_ShenZhenMap
+component "data_panel/ShenZhenWeather" as data_panel_ShenZhenWeather
+component "data_panel/StationsPiles" as data_panel_StationsPiles
+component "data_panel/TypePies" as data_panel_TypePies
+component "info_maintenance/business_infomation/BusinessInfo" as info_maintenance_business_infomation_BusinessInfo
+component "info_maintenance/charging_piles/BreadcrumbNav" as info_maintenance_charging_piles_BreadcrumbNav
+component "info_maintenance/charging_piles/ChargingPiles" as info_maintenance_charging_piles_ChargingPiles
+component "info_maintenance/charging_piles/ChargingTreeSelect" as info_maintenance_charging_piles_ChargingTreeSelect
+component "info_maintenance/charging_piles/PileFormModal" as info_maintenance_charging_piles_PileFormModal
+component "info_maintenance/charging_piles/PileTable" as info_maintenance_charging_piles_PileTable
+component "info_maintenance/charging_piles/utils" as info_maintenance_charging_piles_utils
+component "info_maintenance/charging_stations/ChargingStations" as info_maintenance_charging_stations_ChargingStations
+component "info_maintenance/charging_stations/StationActions" as info_maintenance_charging_stations_StationActions
+component "info_maintenance/charging_stations/StationFormModal" as info_maintenance_charging_stations_StationFormModal
+component "info_maintenance/charging_stations/StationTable" as info_maintenance_charging_stations_StationTable
+component "info_maintenance/charging_time_data/CTData" as info_maintenance_charging_time_data_CTData
+component "info_maintenance/charging_time_data/DataTable" as info_maintenance_charging_time_data_DataTable
+component "info_maintenance/charging_time_data/LineChart" as info_maintenance_charging_time_data_LineChart
+component "info_maintenance/charging_time_data/QueryForm" as info_maintenance_charging_time_data_QueryForm
+component "info_maintenance/districts/Districts" as info_maintenance_districts_Districts
+component "info_maintenance/InfoMaintenance" as info_maintenance_InfoMaintenance
+component "info_maintenance/InfoMaintenanceRoutes" as info_maintenance_InfoMaintenanceRoutes
+component "info_maintenance/users/UserActions" as info_maintenance_users_UserActions
+component "info_maintenance/users/UserFormModal" as info_maintenance_users_UserFormModal
+component "info_maintenance/users/Users" as info_maintenance_users_Users
+component "info_maintenance/users/UserTable" as info_maintenance_users_UserTable
+component "info_maintenance/welcome/InfoWelcome" as info_maintenance_welcome_InfoWelcome
+component "Intro" as Intro
+component "Login" as Login
+component "network_analysis/MarkerMap" as network_analysis_MarkerMap
+component "network_analysis/NetworkAnalysis" as network_analysis_NetworkAnalysis
+component "network_analysis/NetworkMetricsDashboard" as network_analysis_NetworkMetricsDashboard
+component "network_analysis/StationModal" as network_analysis_StationModal
+component "withAuth" as withAuth
+analysis_report_AnalysisReport --> analysis_report_LineChart
+analysis_report_AnalysisReport --> analysis_report_Selections
+analysis_report_AnalysisReport --> analysis_report_FileUpload
+analysis_report_AnalysisReport --> analysis_report_FutureForecastChart
+analysis_report_AnalysisReport --> analysis_report_ModelEvaluationChart
+analysis_report_AnalysisReport --> analysis_report_ClustersPieChart
+analysis_report_AnalysisReport --> analysis_report_BarChart
+analysis_report_AnalysisReport --> analysis_report_DataTable
+analysis_report_AnalysisReport --> analysis_report_InfoHelpButton
+community_Community --> community_IndustryNews
+community_Community --> community_user_comments_UserComments
+community_user_comments_CommentList --> community_user_comments_CommentItem
+community_user_comments_UserComments --> community_user_comments_CommentList
+community_user_comments_UserComments --> community_user_comments_CommentModal
+community_user_comments_UserComments --> community_user_comments_HotComments
+community_user_comments_UserComments --> community_user_comments_MyComments
+community_user_comments_UserComments --> community_user_comments_Messages
+community_user_comments_UserComments --> community_user_comments_WordCloudView
+data_panel_DataPanel --> data_panel_ShenZhenMap
+data_panel_DataPanel --> data_panel_StationsPiles
+data_panel_DataPanel --> data_panel_TypePies
+data_panel_DataPanel --> data_panel_RealTimeVolume
+data_panel_DataPanel --> data_panel_RealTimeOccupancy
+data_panel_DataPanel --> data_panel_PriceTrend
+data_panel_DataPanel --> data_panel_OccupancyRanking
+data_panel_DataPanel --> data_panel_ShenZhenWeather
+data_panel_DataPanel --> withAuth
+data_panel_ShenZhenMap --> ___assets_json_shenzhenshi_json
+info_maintenance_charging_piles_ChargingPiles --> info_maintenance_charging_piles_ChargingTreeSelect
+info_maintenance_charging_piles_ChargingPiles --> info_maintenance_charging_piles_PileTable
+info_maintenance_charging_piles_ChargingPiles --> info_maintenance_charging_piles_BreadcrumbNav
+info_maintenance_charging_piles_ChargingPiles --> info_maintenance_charging_piles_PileFormModal
+info_maintenance_charging_piles_ChargingPiles --> info_maintenance_charging_piles_utils
+info_maintenance_charging_stations_ChargingStations --> info_maintenance_charging_stations_StationTable
+info_maintenance_charging_stations_ChargingStations --> info_maintenance_charging_stations_StationFormModal
+info_maintenance_charging_stations_ChargingStations --> info_maintenance_charging_stations_StationActions
+info_maintenance_charging_time_data_CTData --> info_maintenance_charging_time_data_QueryForm
+info_maintenance_charging_time_data_CTData --> info_maintenance_charging_time_data_LineChart
+info_maintenance_charging_time_data_CTData --> info_maintenance_charging_time_data_DataTable
+info_maintenance_InfoMaintenance --> info_maintenance_InfoMaintenanceRoutes
+info_maintenance_InfoMaintenance --> withAuth
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_welcome_InfoWelcome
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_users_Users
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_charging_stations_ChargingStations
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_charging_piles_ChargingPiles
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_districts_Districts
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_charging_time_data_CTData
+info_maintenance_InfoMaintenanceRoutes --> info_maintenance_business_infomation_BusinessInfo
+info_maintenance_users_Users --> info_maintenance_users_UserTable
+info_maintenance_users_Users --> info_maintenance_users_UserFormModal
+info_maintenance_users_Users --> info_maintenance_users_UserActions
+Intro --> ___assets_images_maintenance_jpg
+Intro --> ___assets_images_network_png
+Intro --> ___assets_images_datapanel_png
+Intro --> ___assets_images_report_png
+Intro --> ___assets_images_business_jpg
+Intro --> ___assets_images_community_jpg
+network_analysis_MarkerMap --> network_analysis_StationModal
+network_analysis_NetworkAnalysis --> network_analysis_MarkerMap
+network_analysis_NetworkAnalysis --> network_analysis_NetworkMetricsDashboard
+network_analysis_NetworkAnalysis --> withAuth
+@enduml

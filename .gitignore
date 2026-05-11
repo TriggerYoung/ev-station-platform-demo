@@ -1,0 +1,45 @@
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Local secrets (copy from .env.example)
+.env
+.env.local
+*.local.env
+
+# Dependencies & build artifacts
+evpcs_monitor/backend/venv/
+evpcs_monitor/backend/.venv/
+evpcs_monitor/frontend/node_modules/
+evpcs_monitor/frontend/build/
+
+# ---------------------------------------------------------------------------
+# 体积较大的数据与二进制（开源展示可不提交；克隆后按 README「默认不纳入 Git 的内容」准备）
+# ---------------------------------------------------------------------------
+
+# InfluxDB 安装包（单文件 >100MB，且可用官方 Release 替代）
+influxdb2-2.7.11/
+
+# 时序与预处理 CSV（约数百 MB，用于写入 Influx / 本地分析）
+evpcs_monitor/backend/data/*
+!evpcs_monitor/backend/data/.gitkeep
+
+# 上传目录中的数据文件（保留空目录结构）
+evpcs_monitor/backend/uploads/*
+!evpcs_monitor/backend/uploads/.gitkeep
+
+# 后端根目录散装大 CSV
+evpcs_monitor/backend/*.csv
+
+# 爬虫/资讯缓存（可本地再生成）
+evpcs_monitor/backend/community/news_cache.json

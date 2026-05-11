@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap.bundle.js"></script>
+    <style>
+        .alert-center {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 400px; margin: 50px auto; " align="center"><h1>用户登录界面</h1></div>
+
+<div id="loginForm" style="width: 400px; margin: 100px auto; ">
+    <form method="post">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="name@example.com" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1"
+                   name="password">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <!-- 错误警告框 -->
+    {% if error %}
+        <div class="alert alert-warning alert-center" id="errorAlert" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    // 获取从后端传递的 error 变量
+    const error = "{{ error }}";
+
+    // 如果有错误信息，则显示警告框
+    if (error) {
+        const errorAlert = document.getElementById('errorAlert');
+        errorAlert.style.display = 'block'; // 显示警告框
+
+        // 1.5秒后开始渐变消失
+        setTimeout(() => {
+            let opacity = 1;
+            const fadeOut = setInterval(() => {
+                if (opacity <= 0) {
+                    clearInterval(fadeOut);
+                    errorAlert.style.display = 'none';  // 隐藏警告框
+                } else {
+                    opacity -= 0.05;
+                    errorAlert.style.opacity = opacity;
+                }
+            }, 50);
+        }, 500);  // 延时0.5秒后开始消失动画
+    }
+</script>
+
+</body>
+</html>

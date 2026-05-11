@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Introduction</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap.bundle.js"></script>
+</head>
+<body>
+<div id="introHeader">
+    <div class="d-flex bd-highlight">
+        <div class="p-2 flex-grow-1 bd-highlight"><h2>充电站管理信息系统介绍与模块入口主页</h2></div>
+        <div class="p-2 bd-highlight">
+            <a class="btn btn-primary" href="/login" role="button" title="userLogin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                    <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                </svg>
+                Login
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="navBar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">导航</span>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/info_maintenance">信息维护</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            数据分析
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/network_analysis">区域充电网络</a></li>
+                            <li><a class="dropdown-item" href="/data_panel">数据可视化大屏</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/analysis_report">智能分析报告</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">商业合作</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div id="introText" style="width: 90%; margin: 0px auto 0px; border-bottom: #0dcaf0 1px dashed">
+    <p class="text-center fw-bold" style="font-size: 24px;">--系统概述--</p>
+    <p class="text-center fw-normal" style="font-size: 18px;">
+        本平台致力于提供公共充电基础设施的实时监控与综合分析，全面涵盖充电站的运行状态、使用数据、网络健康等关键指标。<br/>通过先进的数据处理与智能分析，本平台能够高效支持充电设施的管理与优化决策，保障充电网络的可靠性与服务质量，为新能源汽车的普及提供坚实的基础。
+    </p>
+    <p class="text-center fst-italic" style="font-size: 20px;">System Overview</p>
+    <p class="text-center fst-italic" style="font-size: 18px;">
+        This platform is dedicated to providing real-time monitoring and comprehensive analysis of Shenzhen's public
+        charging infrastructure, covering key metrics such as station status, usage data, and network health. With
+        advanced data processing and intelligent analytics, the platform effectively supports the management and
+        optimization of charging facilities, ensuring the reliability and service quality of the charging network, and
+        laying a solid foundation for the widespread adoption of electric vehicles.
+    </p>
+</div>
+
+<div id="mainModule" style="width: 90%; margin: 0px auto 0px">
+    <p class="text-center fw-bold" style="font-size: 24px;">--主要模块--</p>
+    <div class="row g-0 bg-light position-relative">
+        <div class="col-md-6 mb-md-0 p-md-4">
+            <img src="/static/images/maintenance.jpg" class="w-100" alt="City Background">
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+            <h5 class="mt-0">充电站信息维护</h5>
+            <p>在此模块中，用户可以查看和更新充电站的基础信息，包括位置、充电桩数量、服务价格等。管理员可通过此模块对充电站数据进行管理和维护。</p>
+            <a href="/info_maintenance" class="stretched-link">Go to Information Maintenance</a>
+        </div>
+    </div>
+    <div class="row g-0 bg-light position-relative">
+        <div class="col-md-6 mb-md-0 p-md-4">
+            <h5 class="mt-0">区域充电网络分析</h5>
+            <p>在该模块中，用户可以查看不同区域的充电基础设施布局，分析充电站的分布、连接性以及区域内的充电需求情况。帮助决策者制定合理的资源配置策略。</p>
+            <a href="/network_analysis" class="stretched-link">Go to Regional Network Analysis</a>
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+            <img src="/static/images/network.jpg" class="w-100" alt="Charging Network">
+        </div>
+    </div>
+    <div class="row g-0 bg-light position-relative">
+        <div class="col-md-6 mb-md-0 p-md-4">
+            <img src="/static/images/blackhole.jpg" class="w-100" alt="Data Visualization">
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+            <h5 class="mt-0">数据可视化大屏</h5>
+            <p>通过该功能，用户能够实时查看充电站的运行状态、充电量、占用率等信息。该模块支持通过图表和地图展示充电基础设施的各项数据。</p>
+            <a href="/data_panel" class="stretched-link">Go to Data Visualization</a>
+        </div>
+    </div>
+    <div class="row g-0 bg-light position-relative">
+        <div class="col-md-6 mb-md-0 p-md-4">
+            <h5 class="mt-0">智能分析报告</h5>
+            <p>该模块提供了基于历史数据和实时数据的智能分析报告，包括充电需求预测、布局优化建议等，帮助决策者合理规划充电网络和资源。</p>
+            <a href="/analysis_report" class="stretched-link">Go to Intelligent Analysis</a>
+        </div>
+        <div class="col-md-6 p-4 ps-md-0">
+            <img src="/static/images/report.png" class="w-100" alt="Analysis Report">
+        </div>
+    </div>
+</div>
+</body>
+</html>

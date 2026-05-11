@@ -1,0 +1,156 @@
+/* datapanel.css */
+.header {
+    background: linear-gradient(to right, #1e2a47, #6a44ff, #00bcd4, #1e2a47); /* 科幻风格渐变背景 */
+    color: #fff;
+    padding: 0;
+    display: flex;
+    justify-content: space-between; /* 让左右部分靠两边 */
+    align-items: center; /* 垂直居中 */
+    padding-left: 20px; /* 添加左边内边距 */
+    padding-right: 20px; /* 添加右边内边距 */
+    position: relative; /* 确保绝对定位的元素相对header定位 */
+  }
+  
+  .title {
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "华文楷体";  /* 使用科幻风格字体 */
+    text-align: center;
+    position: absolute; /* 绝对定位 */
+    left: 50%;  /* 定位到中间 */
+    transform: translateX(-50%); /* 通过平移调整到准确的居中位置 */
+  }
+  
+  /* 子图卡片容器样式 */
+.cardContainer {
+    background-color: #00102A;
+    color: white;
+    height: 33%;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10;
+    position: relative; /* 为伪元素定位准备 */
+    overflow: hidden; /* 隐藏超出圆角的部分 */
+  }
+  
+  /* 流光边框动画 */
+  .cardContainer::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: -1;    /* 确保伪元素在内容下方 */
+    background: linear-gradient(
+      0deg,
+      transparent,
+      rgba(16, 245, 249, 0.7),
+      transparent
+    );
+    animation: rotate 15s linear infinite;
+    transform-origin: center center;
+  }
+  
+  /* 创建边框遮罩 */
+  .cardContainer::after {
+    content: "";
+    position: absolute;
+    inset: 1px; /* 边框宽度 */
+    background: #00102A;
+    border-radius: 8px;
+    z-index: -1;    /* 确保伪元素在内容下方 */
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 地图卡片容器样式 */
+  .mapCardContainer {
+    position: relative; /* 确保伪元素定位相对于容器 */
+    background-color: #00102A;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+    overflow: hidden; /* 隐藏溢出部分，防止滚动条 */
+  }
+  
+  /* 背景图1 - lbx.png 顺时针旋转 */
+  .mapCardContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/lbx.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: rotateLbx 15s infinite linear;
+    transform-origin: center;
+    z-index: -1; /* 确保在地图内容下方 */
+    opacity: 0.7; /* 调整透明度 */;
+  }
+  
+  /* 背景图2 - jt.png 逆时针旋转 */
+  .mapCardContainer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/jt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: rotateJt 15s infinite linear;
+    transform-origin: center;
+    z-index: -1; /* 确保在地图内容下方 */;
+  }
+  
+  /* 背景图1 (lbx.png) 顺时针旋转 */
+  @keyframes rotateLbx {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* 背景图2 (jt.png) 逆时针旋转 */
+  @keyframes rotateJt {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg); /* 逆时针旋转 */
+    }
+  }
+  
+  
