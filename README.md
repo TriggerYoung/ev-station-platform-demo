@@ -1,10 +1,8 @@
 # EV Charging Operations Console
 
-[![在线 Demo](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%E7%AB%8B%E5%8D%B3%E4%BD%93%E9%AA%8C-1677ff?style=for-the-badge&logo=vercel&logoColor=white)](https://YOUR-VERCEL-PRODUCTION-URL.vercel.app)
 [![GitHub 源码](https://img.shields.io/badge/GitHub-%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81-181717?style=for-the-badge&logo=github)](https://github.com/TriggerYoung/ev-station-platform-demo)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTriggerYoung%2Fev-station-platform-demo)
 
-> **部署提示：** `在线 Demo` 当前使用明确的占位地址。首次 Vercel 部署完成后，请将 `YOUR-VERCEL-PRODUCTION-URL` 替换为项目实际的 Production URL。
+> **在线 Demo 部署中。** 取得可长期访问的正式地址后，将在此处添加体验按钮。
 
 全栈演示项目：**充电站与桩的台账管理**、**运行态时序指标可视化**、**地图与网络视图**、**上传数据的统计与预测**、**反馈与社区模块**。前后端按业务域拆分，便于阅读代码结构。
 
@@ -93,13 +91,32 @@ REACT_APP_DEMO_MODE=false npm start
 
 开发服务器会把 `/api` 请求代理至 `http://127.0.0.1:5000`。不要把 `.env`、数据库密码或 InfluxDB Token 提交到 Git。
 
-### 部署到 Vercel
+### 部署到腾讯云 CloudBase 静态网站托管
+
+当前仓库是 React 单页应用，线上 Demo 使用内置模拟数据，托管静态构建产物即可。腾讯云控制台中进入「云开发 CloudBase → 静态网站托管 → 新建部署 → Git 仓库 → 公开仓库」，填写本仓库地址 `https://github.com/TriggerYoung/ev-station-platform-demo.git`，分支选择 `main`。构建配置如下：
+
+| 配置项 | 值 |
+| --- | --- |
+| 项目框架 | React |
+| 目标目录 | `/evpcs_monitor/frontend` |
+| Node.js 版本 | 20 或 22 |
+| 安装命令 | `npm ci` |
+| 构建命令 | `npm run build` |
+| 构建产物目录 | `./build` |
+| 部署路径 | `/` |
+| 环境变量 | `REACT_APP_DEMO_MODE=true` |
+
+部署后，在「静态网站托管 → 基础配置」将 4xx 错误页面设为 `index.html`，让 `/login`、`/data_panel` 等 React Router 子页面可直接访问和刷新。先用默认域名验证首页、访客登录和子页面；默认域名仅适合测试，面向面试官的长期访问入口需要绑定自有域名。使用中国大陆资源提供网站服务时，自有域名需完成 ICP 备案。取得稳定生产地址后，再将 README 顶部的 Demo 按钮指向该地址。具体操作见腾讯云的[部署指南](https://docs.cloudbase.net/hosting/web-hosting-guide)、[React 单页应用指南](https://docs.cloudbase.net/recipes/add-hosting-react)与[默认域名限制](https://docs.cloudbase.net/service/alias)。
+
+### 部署到 Vercel（备选）
 
 仓库根目录的 [`vercel.json`](vercel.json) 已包含 monorepo 构建路径和 React Router 的 SPA 回退配置。Vercel 只部署可公开访问的 Demo 前端，不部署 Flask、MySQL 或 InfluxDB。
 
+[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTriggerYoung%2Fev-station-platform-demo)
+
 1. 在 Vercel 导入本 GitHub 仓库，**Root Directory 保持仓库根目录**。
 2. 构建设置直接使用 `vercel.json`；如需显式配置环境变量，可增加 `REACT_APP_DEMO_MODE=true`。
-3. 完成 Production 部署后，将 README 顶部的占位地址替换为实际 URL。
+3. 完成 Production 部署后，将 README 顶部的 Demo 按钮指向实际 URL。
 
 ---
 
