@@ -1,7 +1,7 @@
 // Intro.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Layout, Menu, Card, Button, Input, message, Typography, Row, Col, Image, Modal, FloatButton, Tour, Avatar } from "antd";
-import { UserOutlined, LoginOutlined, SearchOutlined, ExclamationCircleOutlined, ThunderboltTwoTone } from "@ant-design/icons";
+import { UserOutlined, LoginOutlined, SearchOutlined, ExclamationCircleOutlined, ThunderboltTwoTone, ExperimentOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import maintenanceImg from "../assets/images/maintenance.jpg";
 import networkImg from "../assets/images/network.png";
@@ -9,6 +9,7 @@ import datapanelImg from "../assets/images/datapanel.png";
 import reportImg from "../assets/images/report.png";
 import businessImg from "../assets/images/business.jpg";
 import communityImg from "../assets/images/community.jpg";
+import { clearDemoGuestSession, createDemoGuestSession } from "../demo/demoMode";
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
@@ -135,7 +136,11 @@ const Intro = () => {
       onOk: () => {
         // 用户点击确认时执行的操作
         localStorage.removeItem("role"); // 删除本地存储的角色信息
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
+        clearDemoGuestSession();
         setRole(null); // 更新角色状态
+        setUsername(null);
         message.success("用户已登出！"); // 显示登出成功消息
         // navigate("/login"); // 跳转到登录页面
       },
@@ -144,6 +149,14 @@ const Intro = () => {
         message.info("已取消登出操作");
       },
     });
+  };
+
+  const handleGuestExperience = () => {
+    createDemoGuestSession();
+    setRole("admin");
+    setUsername("演示访客");
+    message.success("已进入演示模式，写操作不会保存到服务器。", 2);
+    navigate("/data_panel");
   };
   // 访问控制：检查用户是否登录并根据角色判断是否允许访问模块
   const handleProtectedNavigation = (url, moduleName) => {
@@ -198,9 +211,14 @@ const Intro = () => {
             </Button>
           </div>
         ) : (
-          <Button type="primary" href="/login" id="loginButton">
-            <UserOutlined /> 登录
-          </Button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <Button icon={<ExperimentOutlined />} onClick={handleGuestExperience}>
+              一键访客体验
+            </Button>
+            <Button type="primary" href="/login" id="loginButton">
+              <UserOutlined /> 账号登录
+            </Button>
+          </div>
         )}
 
       </Header>

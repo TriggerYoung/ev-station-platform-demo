@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from tqdm import tqdm
 from backend.utils.geo_utils import get_address_adcode_by_tencent
@@ -25,13 +27,18 @@ inf_cleaned_df['station_id'] = inf_cleaned_df['station_id'].astype(str)
 
 inf_cleaned_df.reset_index(drop=True, inplace=True)
 
+tencent_map_key = os.getenv("TENCENT_MAP_KEY", "").strip()
+if not tencent_map_key:
+    raise RuntimeError(
+        "未设置 TENCENT_MAP_KEY。请在运行数据预处理前通过环境变量提供腾讯地图 Key。"
+    )
+
 # 按行读取清洗后的数据，根据经纬度信息增加地址名称信息和行政区编码
 for i in tqdm(range(len(inf_cleaned_df)), desc="Processing", unit="row"):
     latitude = inf_cleaned_df.iloc[i]['latitude']
     longitude = inf_cleaned_df.iloc[i]['longitude']
     location = f'{latitude},{longitude}'
-    key = 'JWFBZ-A4LCW-UKCRB-Y6SRS-I24V3-YWBJB'  # 腾讯地图API密钥
-    address, adcode = get_address_adcode_by_tencent(location, key)
+    address, adcode = get_address_adcode_by_tencent(location, tencent_map_key)
     inf_cleaned_df.loc[i, 'address'] = address
     inf_cleaned_df.loc[i, 'adcode'] = adcode
 

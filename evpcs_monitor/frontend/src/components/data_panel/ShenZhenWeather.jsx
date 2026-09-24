@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { isDemoMode } from '../../demo/demoMode';
 
 const ShenZhenWeather = () => {
     const [weather, setWeather] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // 高德天气API的url
-        const url = `https://restapi.amap.com/v3/weather/weatherInfo?key=766c44acbb2e8d26a2492abfbbbe7193&city=440300`;
+        if (isDemoMode()) {
+            setWeather({ weather: '多云', temperature: '27', humidity: '68', winddirection: '东南', windpower: '2' });
+            return;
+        }
+
+        const weatherApiKey = process.env.REACT_APP_AMAP_WEATHER_KEY;
+        if (!weatherApiKey) {
+            setError('天气服务未配置');
+            return;
+        }
+
+        const url = `https://restapi.amap.com/v3/weather/weatherInfo?key=${encodeURIComponent(weatherApiKey)}&city=440300`;
 
         // 获取天气信息
         axios.get(url)

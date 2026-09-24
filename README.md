@@ -1,15 +1,36 @@
 # EV Charging Operations Console
 
+[![在线 Demo](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%E7%AB%8B%E5%8D%B3%E4%BD%93%E9%AA%8C-1677ff?style=for-the-badge&logo=vercel&logoColor=white)](https://YOUR-VERCEL-PRODUCTION-URL.vercel.app)
+[![GitHub 源码](https://img.shields.io/badge/GitHub-%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81-181717?style=for-the-badge&logo=github)](https://github.com/TriggerYoung/ev-station-platform-demo)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTriggerYoung%2Fev-station-platform-demo)
+
+> **部署提示：** `在线 Demo` 当前使用明确的占位地址。首次 Vercel 部署完成后，请将 `YOUR-VERCEL-PRODUCTION-URL` 替换为项目实际的 Production URL。
+
 全栈演示项目：**充电站与桩的台账管理**、**运行态时序指标可视化**、**地图与网络视图**、**上传数据的统计与预测**、**反馈与社区模块**。前后端按业务域拆分，便于阅读代码结构。
 
 **维护者：** [@TriggerYoung](https://github.com/TriggerYoung)
 
 ---
 
+## 在线演示
+
+在线版本以 **Demo 模式**运行：前端使用内置模拟数据完成核心页面与交互展示，不连接公开数据库，也不会将访客操作写入真实业务环境。
+
+- 打开 `/login`，点击“**一键访客体验**”即可进入数据大屏；带有 `redirect` 参数时会进入原目标页面。
+- 进入“分析报告”后点击“**加载演示样例**”，即可直接完成趋势、聚类、预测与报告生成，无需自行准备 CSV。
+- 页面会显示“演示模式 · 模拟数据”标识，避免将模拟数据误认为真实运营数据。
+- 演示数据以仓库 `backend/network_data` 中的 1,543 个站点快照为基础，在前端确定性派生充电桩、运行指标与趋势数据；同一版本每次打开得到一致结果。
+- 可使用 `?demo=1` 强制开启 Demo 模式，使用 `?demo=0` 切换到真实后端模式；选择会保存在当前浏览器中。
+- 生产构建未显式配置时默认开启 Demo 模式；本地开发未显式配置时默认连接 Flask 后端。
+
+> 在线 Demo 用于稳定展示交互与前端工程能力；完整的 Flask、MySQL 与 InfluxDB 实现均保留在本仓库中。
+
+---
+
 ## 逻辑说明
 
-- **数据分层**：关系型数据承载站点、桩、用户等主数据；时序数据承载电量、占用率、价格等观测，查询与展示路径分离。  
-- **接口形态**：后端按模块划分 REST 入口；前端路由与模块一一对应，页面内聚合图表与地图能力。  
+- **数据分层**：关系型数据承载站点、桩、用户等主数据；时序数据承载电量、占用率、价格等观测，查询与展示路径分离。
+- **接口形态**：后端按模块划分 REST 入口；前端路由与模块一一对应，页面内聚合图表与地图能力。
 - **分析链路**：对上传的时间序列做重采样与统计，在预测环节优先使用 Prophet，环境不满足时回退到轻量统计模型，保证接口形态稳定。
 
 ---
@@ -17,6 +38,68 @@
 ## 技术概要
 
 前端以 React 为主，配合常用图表与地图组件；后端为 Flask，连接 MySQL 与 InfluxDB 2.x；分析侧使用 pandas、scikit-learn、statsmodels 等。
+
+---
+
+## 运行方式
+
+### 方式一：本地 Demo 模式（无需数据库）
+
+适合快速查看项目。前端会使用内置模拟数据，不需要启动 Flask、MySQL 或 InfluxDB。
+
+```bash
+cd evpcs_monitor/frontend
+npm ci
+REACT_APP_DEMO_MODE=true npm start
+```
+
+浏览器访问 <http://localhost:3000/login>，点击“一键访客体验”。也可以在任意页面 URL 后增加 `?demo=1` 临时切换。
+
+### 方式二：连接真实本地后端
+
+真实后端模式需要 Python 3、MySQL 以及 InfluxDB 2.x。先准备后端环境：
+
+```bash
+cd evpcs_monitor/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+```
+
+编辑 `.env`，填写本机 MySQL 连接信息和仅供本地使用的 `DEMO_USER_PASSWORD`。随后先校验、再幂等写入演示主数据：
+
+```bash
+python3 seed_demo_data.py --dry-run
+python3 seed_demo_data.py
+```
+
+该脚本以仓库 `network_data` 为事实源，创建缺失数据库与表，并写入 9 个行政区、1,543 个站点、20,945 个确定性生成的充电桩以及演示用户和评论；重复运行不会新增重复记录，也不会执行 `DROP` 或 `TRUNCATE`。旧版 `mysql_scripts/build_sql.sql` 仍保留作结构参考，但不再作为推荐初始化入口。
+
+数据大屏中的时序指标在真实后端模式下仍需要单独准备 InfluxDB 数据；在线 Demo 则使用确定性生成的时序数据。服务与数据就绪后，检查连接并启动 Flask：
+
+```bash
+python check_env.py
+python app.py
+```
+
+另开一个终端启动前端：
+
+```bash
+cd evpcs_monitor/frontend
+npm ci
+REACT_APP_DEMO_MODE=false npm start
+```
+
+开发服务器会把 `/api` 请求代理至 `http://127.0.0.1:5000`。不要把 `.env`、数据库密码或 InfluxDB Token 提交到 Git。
+
+### 部署到 Vercel
+
+仓库根目录的 [`vercel.json`](vercel.json) 已包含 monorepo 构建路径和 React Router 的 SPA 回退配置。Vercel 只部署可公开访问的 Demo 前端，不部署 Flask、MySQL 或 InfluxDB。
+
+1. 在 Vercel 导入本 GitHub 仓库，**Root Directory 保持仓库根目录**。
+2. 构建设置直接使用 `vercel.json`；如需显式配置环境变量，可增加 `REACT_APP_DEMO_MODE=true`。
+3. 完成 Production 部署后，将 README 顶部的占位地址替换为实际 URL。
 
 ---
 
@@ -72,4 +155,4 @@
 
 ---
 
-本仓库以**代码与结构展示**为主，不包含业务数据与运行环境说明。
+本仓库同时提供稳定的浏览器 Demo 与完整全栈实现。在线环境使用模拟数据；真实后端模式所需的本地凭据和大体量时序数据不纳入 Git。

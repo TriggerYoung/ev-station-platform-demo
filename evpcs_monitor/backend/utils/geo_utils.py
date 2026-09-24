@@ -1,3 +1,5 @@
+import os
+
 from ratelimiter import RateLimiter
 import requests
 
@@ -44,7 +46,9 @@ def get_address_adcode_by_tencent(location, key):
 def main():
     address = '北京市海淀区北四环西路66号'
     location = '39.984154,116.307490'
-    key = 'JWFBZ-A4LCW-UKCRB-Y6SRS-I24V3-YWBJB'
+    key = os.getenv("TENCENT_MAP_KEY", "").strip()
+    if not key:
+        raise RuntimeError("未设置 TENCENT_MAP_KEY")
     address, adcode = get_address_adcode_by_tencent(location, key)
     print(type(address), type(adcode))
 

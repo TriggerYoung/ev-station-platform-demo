@@ -55,6 +55,12 @@ const RealTimeVolume = () => {
 
   // 定时请求数据，每5秒请求一次
   useEffect(() => {
+    fetchData();
+    // 首屏立即展示一个完整演示窗口；后续仍按原逻辑轮询。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     const intervalId = setInterval(() => {
       fetchData();
     }, 5000); // 每5秒请求一次

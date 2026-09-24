@@ -50,6 +50,11 @@ const RealTimeOccupancy = ({ total_piles }) => {
 
   // 定时请求数据，每5秒请求一次
   useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     const intervalId = setInterval(() => {
       fetchData();
     }, 5000); // 每5秒请求一次

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; 
 import axios from "axios";
-import { Form, Input, Button, Checkbox, Card, message } from "antd";
+import { Form, Input, Button, Checkbox, Card, Divider, Typography, message } from "antd";
+import { ExperimentOutlined } from "@ant-design/icons";
 import ParticlesBg from "particles-bg";
+import { createDemoGuestSession } from "../demo/demoMode";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +13,12 @@ const Login = () => {
 
   // 获取 URL 中的 redirect 参数
   const redirectPath = new URLSearchParams(location.search).get("redirect") || "/";
+
+  const handleGuestExperience = () => {
+    createDemoGuestSession();
+    message.success("已进入演示访客模式，所有数据均为模拟数据。", 2);
+    navigate(redirectPath === "/" ? "/data_panel" : redirectPath, { replace: true });
+  };
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -63,6 +71,18 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
+        <Divider plain>或</Divider>
+        <Button
+          icon={<ExperimentOutlined />}
+          block
+          size="large"
+          onClick={handleGuestExperience}
+        >
+          一键访客体验
+        </Button>
+        <Typography.Text type="secondary" style={{ display: "block", marginTop: 10 }}>
+          无需账号，使用仓库快照样本与确定性模拟数据
+        </Typography.Text>
       </Card>
     </div>
   );

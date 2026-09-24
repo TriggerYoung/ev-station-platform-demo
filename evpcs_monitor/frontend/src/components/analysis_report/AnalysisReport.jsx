@@ -1,7 +1,7 @@
 // AnalysisReport.jsx
 import React, { useState, useEffect } from "react";
-import { Layout, Steps, Spin, Row, Col, Card, Tooltip, Button, message, Tour, Popover } from "antd";
-import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import { Layout, Steps, Spin, Row, Col, Card, Tooltip, Button, message, Tour } from "antd";
+import { DownloadOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
 import ParticlesBg from "particles-bg";
@@ -16,6 +16,7 @@ import ClustersPieChart from "./ClustersPieChart";
 import BarChart from "./BarChart";
 import DataTable from "./DataTable";
 import InfoHelpButton from "./InfoHelpButton";
+import { isDemoMode } from "../../demo/demoMode";
 
 const { Step } = Steps;
 const { Header, Content } = Layout;
@@ -31,6 +32,7 @@ const AnalysisReport = () => {
         aggregatedTimes: [],
         aggregatedVolumes: [],
     });
+    const demoMode = isDemoMode();
 
     // Tour相关
     const [tourOpen, setTourOpen] = useState(true);
@@ -95,6 +97,49 @@ const AnalysisReport = () => {
             setCurrentStep(0);
             message.error("智能分析出错");
         }
+    };
+
+    // 为访客准备一份无需本地文件的确定性样例数据。
+    const loadDemoData = () => {
+        const times = [];
+        const volumes = [];
+        const csvRows = ["time,volume"];
+        const start = moment("2026-09-01 00:00:00");
+
+        for (let index = 0; index < 24 * 7; index += 1) {
+            const current = start.clone().add(index, "hours");
+            const hour = current.hour();
+            const commutingPeak = hour >= 8 && hour <= 10 ? 34 : 0;
+            const eveningPeak = hour >= 18 && hour <= 22 ? 52 : 0;
+            const dailyWave = 18 * Math.sin(((hour - 6) / 24) * Math.PI * 2);
+            const weekendFactor = current.day() === 0 || current.day() === 6 ? 0.82 : 1;
+            const volume = Math.max(
+                12,
+                (58 + commutingPeak + eveningPeak + dailyWave + (index % 5) * 2) * weekendFactor
+            );
+            const time = current.format("YYYY-MM-DD HH:mm:ss");
+
+            times.push(time);
+            volumes.push(Number(volume.toFixed(2)));
+            csvRows.push(`${time},${volume.toFixed(2)}`);
+        }
+
+        const file = new File([csvRows.join("\n")], "demo-charging-volume.csv", {
+            type: "text/csv",
+        });
+        setFileList([
+            {
+                uid: "demo-charging-volume",
+                name: file.name,
+                status: "done",
+                size: file.size,
+                originFileObj: file,
+            },
+        ]);
+        setOriginalData({ times, volumes });
+        setAnalysisResult(null);
+        setCurrentStep(0);
+        message.success("演示数据已加载，点击“开始智能分析”即可查看完整报告");
     };
 
     // 数据聚合函数
@@ -203,8 +248,19 @@ const AnalysisReport = () => {
 
                             </div>
                         </Col>
+                        {demoMode && (
+                            <Col span={4}>
+                                <Button
+                                    block
+                                    icon={<ThunderboltOutlined />}
+                                    onClick={loadDemoData}
+                                >
+                                    加载演示样例
+                                </Button>
+                            </Col>
+                        )}
                         {/* 智能分析按钮 */}
-                        <Col span={2}>
+                        <Col span={demoMode ? 4 : 2}>
                             <Button
                                 id="analysisButton"
                                 type="primary"

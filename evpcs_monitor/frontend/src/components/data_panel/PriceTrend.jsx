@@ -53,6 +53,11 @@ const PriceTrend = () => {
 
     // 定时请求数据，每5秒请求一次
     useEffect(() => {
+        fetchPriceData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const intervalId = setInterval(() => {
             fetchPriceData();
         }, 5000); // 每5秒请求一次

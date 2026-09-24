@@ -48,6 +48,11 @@ const OccupancyRanking = () => {
 
     // 定时请求数据，每10秒请求一次
     useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const intervalId = setInterval(() => {
             fetchData();
         }, 10000); // 每10秒请求一次数据

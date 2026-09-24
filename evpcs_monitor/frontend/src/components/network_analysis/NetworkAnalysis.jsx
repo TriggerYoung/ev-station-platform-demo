@@ -15,7 +15,7 @@ const COMMUNITY_COLORS = [
 
 const NetworkAnalysis = () => {
     const [districtTree, setDistrictTree] = useState(null);
-    const [selectedDistrict, setSelectedDistrict] = useState(null);
+    const [selectedDistrict, setSelectedDistrict] = useState('shenzhen');
     const [districtCenter, setDistrictCenter] = useState(null);
     const [communityData, setCommunityData] = useState([]);
     const [stations, setStations] = useState([]);
@@ -109,7 +109,7 @@ const NetworkAnalysis = () => {
     };
 
     // 过滤站点数据
-    const filteredStations = selectedDistrict === 'shenzhen'
+    const filteredStations = !selectedDistrict || selectedDistrict === 'shenzhen'
         ? stations
         : stations.filter(station => station.adcode === selectedDistrict);
 
