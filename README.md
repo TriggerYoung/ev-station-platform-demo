@@ -1,8 +1,9 @@
 # EV Charging Operations Console
 
 [![GitHub 源码](https://img.shields.io/badge/GitHub-%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81-181717?style=for-the-badge&logo=github)](https://github.com/TriggerYoung/ev-station-platform-demo)
+[![在线 Demo（测试版）](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%E6%B5%8B%E8%AF%95%E7%89%88-1677ff?style=for-the-badge)](https://ev-station-demo-d8frqazl42cb8a15-1495752147.tcloudbaseapp.com/)
 
-> **在线 Demo 部署中。** 取得可长期访问的正式地址后，将在此处添加体验按钮。
+> **在线 Demo 为腾讯云 CloudBase 免费体验环境的测试域名。** 首次访问需经过腾讯云提示页；默认域名可能限频，且不保证长期稳定。简历仍建议以 GitHub 仓库为主入口。
 
 全栈演示项目：**充电站与桩的台账管理**、**运行态时序指标可视化**、**地图与网络视图**、**上传数据的统计与预测**、**反馈与社区模块**。前后端按业务域拆分，便于阅读代码结构。
 
@@ -106,7 +107,7 @@ REACT_APP_DEMO_MODE=false npm start
 | 部署路径 | `/` |
 | 环境变量 | `REACT_APP_DEMO_MODE=true` |
 
-部署后，在「静态网站托管 → 基础配置」将 4xx 错误页面设为 `index.html`，让 `/login`、`/data_panel` 等 React Router 子页面可直接访问和刷新。先用默认域名验证首页、访客登录和子页面；默认域名仅适合测试，面向面试官的长期访问入口需要绑定自有域名。使用中国大陆资源提供网站服务时，自有域名需完成 ICP 备案。取得稳定生产地址后，再将 README 顶部的 Demo 按钮指向该地址。具体操作见腾讯云的[部署指南](https://docs.cloudbase.net/hosting/web-hosting-guide)、[React 单页应用指南](https://docs.cloudbase.net/recipes/add-hosting-react)与[默认域名限制](https://docs.cloudbase.net/service/alias)。
+部署后，在「静态网站托管 → 基础配置 → 路由配置」添加一条错误码规则：`404` →「替换路径」`index.html`。这样 `/login`、`/data_panel` 等 React Router 子页面可直接访问和刷新。先用默认域名验证首页、访客登录和子页面；默认域名仅适合测试，面向面试官的长期访问入口需要绑定自有域名。使用中国大陆资源提供网站服务时，自有域名需完成 ICP 备案。具体操作见腾讯云的[部署指南](https://docs.cloudbase.net/hosting/web-hosting-guide)、[React 单页应用指南](https://docs.cloudbase.net/recipes/add-hosting-react)与[默认域名限制](https://docs.cloudbase.net/service/alias)。
 
 > 此项目目前有历史 ESLint 告警。CloudBase 设置 `CI=true` 时，Create React App 会将告警视为构建错误；`build:cloudbase` 脚本只在 CloudBase 构建过程中将其恢复为告警，不表示告警已修复。CloudBase 的构建命令栏不接受行内赋值，且其环境变量配置未覆盖构建进程中的 `CI=true`。标准 `npm run build` 仍保持原样；后续应逐项处理告警并重新启用严格构建。
 
