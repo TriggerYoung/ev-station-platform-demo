@@ -6,17 +6,20 @@ import { LoginOutlined, UserOutlined } from "@ant-design/icons";
 import IndustryNews from "./IndustryNews";
 import UserComments from "./user_comments/UserComments";
 import "../../assets/css/Community.css";
+import { clearDemoGuestSession, getAppRole } from "../../demo/demoMode";
 
 const { Title, Paragraph } = Typography;
 
 const Community = () => {
-  const role = localStorage.getItem("role");
+  const role = getAppRole();
   const username = localStorage.getItem("username");
   const isLoggedIn = !!role;
 
   const handleLogout = () => {
     localStorage.removeItem("role");
+    localStorage.removeItem("user_id");
     localStorage.removeItem("username");
+    clearDemoGuestSession();
     window.location.reload(); // 刷新当前页 
   };
 

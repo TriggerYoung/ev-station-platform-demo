@@ -1,7 +1,7 @@
 # EV Charging Operations Console
 
 [![GitHub 源码](https://img.shields.io/badge/GitHub-%E6%9F%A5%E7%9C%8B%E6%BA%90%E7%A0%81-181717?style=for-the-badge&logo=github)](https://github.com/TriggerYoung/ev-station-platform-demo)
-[![在线 Demo（测试版）](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%E6%B5%8B%E8%AF%95%E7%89%88-1677ff?style=for-the-badge)](https://ev-station-demo-d8frqazl42cb8a15-1495752147.tcloudbaseapp.com/)
+[![在线 Demo（测试版）](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%E6%B5%8B%E8%AF%95%E7%89%88-1677ff?style=for-the-badge)](https://ev-station-demo-d8frqazl42cb8a15-1495752147.tcloudbaseapp.com/?demo=1&guest=1)
 
 > **在线 Demo 为腾讯云 CloudBase 免费体验环境的测试域名。** 首次访问需经过腾讯云提示页；默认域名可能限频，且不保证长期稳定。简历仍建议以 GitHub 仓库为主入口。
 
@@ -15,7 +15,8 @@
 
 在线版本以 **Demo 模式**运行：前端使用内置模拟数据完成核心页面与交互展示，不连接公开数据库，也不会将访客操作写入真实业务环境。
 
-- 打开 `/login`，点击“**一键访客体验**”即可进入数据大屏；带有 `redirect` 参数时会进入原目标页面。
+- 点击顶部“**在线 Demo**”会自动开启演示访客会话并进入模块首页，无需输入账号密码。进入任意模块后可用顶部导航切换，刷新或直接打开模块链接也无需重复登录。
+- 也可在首页或 `/login` 手动点击“**一键访客体验**”；登录页带有 `redirect` 参数时会进入原目标页面。
 - 进入“分析报告”后点击“**加载演示样例**”，即可直接完成趋势、聚类、预测与报告生成，无需自行准备 CSV。
 - 页面会显示“演示模式 · 模拟数据”标识，避免将模拟数据误认为真实运营数据。
 - 演示数据以仓库 `backend/network_data` 中的 1,543 个站点快照为基础，在前端确定性派生充电桩、运行指标与趋势数据；同一版本每次打开得到一致结果。

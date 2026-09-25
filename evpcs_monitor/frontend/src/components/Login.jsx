@@ -4,7 +4,7 @@ import axios from "axios";
 import { Form, Input, Button, Checkbox, Card, Divider, Typography, message } from "antd";
 import { ExperimentOutlined } from "@ant-design/icons";
 import ParticlesBg from "particles-bg";
-import { createDemoGuestSession } from "../demo/demoMode";
+import { clearDemoGuestSession, createDemoGuestSession } from "../demo/demoMode";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -12,12 +12,15 @@ const Login = () => {
   const navigate = useNavigate(); 
 
   // 获取 URL 中的 redirect 参数
-  const redirectPath = new URLSearchParams(location.search).get("redirect") || "/";
+  const requestedPath = new URLSearchParams(location.search).get("redirect") || "/";
+  const redirectPath = requestedPath.startsWith("/") && !requestedPath.startsWith("//")
+    ? requestedPath
+    : "/";
 
   const handleGuestExperience = () => {
     createDemoGuestSession();
     message.success("已进入演示访客模式，所有数据均为模拟数据。", 2);
-    navigate(redirectPath === "/" ? "/data_panel" : redirectPath, { replace: true });
+    navigate(redirectPath, { replace: true });
   };
 
   const handleSubmit = async (values) => {
@@ -27,6 +30,7 @@ const Login = () => {
       const result = response.data;
 
       if (result.success) {
+        clearDemoGuestSession();
         message.success(`登录成功！欢迎, ${result.role}`, 2);
         localStorage.setItem("user_id", result.user_id);
         localStorage.setItem("role", result.role);

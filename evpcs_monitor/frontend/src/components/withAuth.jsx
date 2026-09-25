@@ -1,19 +1,22 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // 使用 useNavigate
+import { useLocation, useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { getAppRole } from "../demo/demoMode";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
     const navigate = useNavigate(); // 使用 useNavigate
-    const isLoggedIn = localStorage.getItem("role"); // 根据实际的登录状态判断逻辑
+    const location = useLocation();
+    const isLoggedIn = Boolean(getAppRole());
 
     useEffect(() => {
       // 判断用户是否登录
       if (!isLoggedIn) {
         message.warning("请先登录！");
-        navigate("/login"); // 未登录则跳转到登录页面
+        const redirect = encodeURIComponent(`${location.pathname}${location.search}`);
+        navigate(`/login?redirect=${redirect}`, { replace: true });
       }
-    }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, location.pathname, location.search, navigate]);
 
     // 如果已登录，渲染原组件
     return isLoggedIn ? <WrappedComponent {...props} /> : null;

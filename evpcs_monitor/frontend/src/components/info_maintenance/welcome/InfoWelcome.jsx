@@ -12,6 +12,7 @@ import {
     CommentOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { canViewDemoAdminPages, getAppRole } from "../../../demo/demoMode";
 
 // 基础卡片样式
 const cardBaseStyle = {
@@ -35,7 +36,7 @@ const InfoWelcome = () => {
     const navigate = useNavigate(); // 初始化 navigate
 
     useEffect(() => {
-        const storedRole = localStorage.getItem("role");
+        const storedRole = getAppRole();
         console.log("💡当前登录角色为：", storedRole);
         setRole(storedRole);
     }, []);
@@ -73,7 +74,7 @@ const InfoWelcome = () => {
             path: "/info_maintenance/districts",
         },
         // 只在 admin 情况下加入该模块
-        ...(role === "admin"
+        ...(canViewDemoAdminPages(role)
             ? [{
                 title: "系统用户管理",
                 icon: <TeamOutlined style={{ fontSize: 32, color: "#ffccc7" }} />,
@@ -87,7 +88,7 @@ const InfoWelcome = () => {
     return (
         <div>
             <Card>
-                <h2><SmileTwoTone /> 欢迎回来{role ? `，${role === "admin" ? "管理员" : "操作员"}` : ""}！</h2>
+                <h2><SmileTwoTone /> 欢迎回来{role ? `，${role === "demo_guest" ? "演示访客" : role === "admin" ? "管理员" : "操作员"}` : ""}！</h2>
                 <p>这里是信息维护中心，您可以管理平台中重要的数据资产。</p>
             </Card>
 

@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { initializeDemoMode } from './demo/demoMode';
+import { initializeDemoMode, initializeDemoGuestFromUrl } from './demo/demoMode';
 import { setupDemoApi } from './demo/demoApi';
 
 initializeDemoMode();
+initializeDemoGuestFromUrl();
 setupDemoApi();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

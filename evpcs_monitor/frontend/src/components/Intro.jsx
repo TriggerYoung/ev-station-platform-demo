@@ -9,7 +9,7 @@ import datapanelImg from "../assets/images/datapanel.png";
 import reportImg from "../assets/images/report.png";
 import businessImg from "../assets/images/business.jpg";
 import communityImg from "../assets/images/community.jpg";
-import { clearDemoGuestSession, createDemoGuestSession } from "../demo/demoMode";
+import { clearDemoGuestSession, createDemoGuestSession, getAppRole, isDemoGuestSession } from "../demo/demoMode";
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
@@ -70,7 +70,7 @@ const Intro = () => {
 
   // 组件挂载时读取本地存储的 role 和 username
   useEffect(() => {
-    const storedRole = localStorage.getItem("role");
+    const storedRole = getAppRole();
     const storedUsername = localStorage.getItem("username");
     if (storedRole) setRole(storedRole);
     if (storedUsername) setUsername(storedUsername);
@@ -110,7 +110,7 @@ const Intro = () => {
   // Tour相关
   // 初始设置为未登录时才显示 Tour
   const [tourOpen, setTourOpen] = useState(() => {
-    return !localStorage.getItem("role");  // role 不存在则为 true（显示）
+    return !getAppRole();
   });
   const tourSteps = [
     {
@@ -153,10 +153,10 @@ const Intro = () => {
 
   const handleGuestExperience = () => {
     createDemoGuestSession();
-    setRole("admin");
+    setRole("demo_guest");
     setUsername("演示访客");
-    message.success("已进入演示模式，写操作不会保存到服务器。", 2);
-    navigate("/data_panel");
+    setTourOpen(false);
+    message.success("已进入演示访客模式，请选择下方模块体验。", 2);
   };
   // 访问控制：检查用户是否登录并根据角色判断是否允许访问模块
   const handleProtectedNavigation = (url, moduleName) => {
@@ -166,7 +166,7 @@ const Intro = () => {
         icon: <ExclamationCircleOutlined />,
         duration: 2,
       });
-      navigate("/login");
+      navigate(`/login?redirect=${encodeURIComponent(url)}`);
       return;
     }
 
@@ -182,7 +182,11 @@ const Intro = () => {
       return;
     }
 
-    window.open(url, "_blank");
+    if (isDemoGuestSession()) {
+      navigate(url);
+    } else {
+      window.open(url, "_blank");
+    }
   };
 
 

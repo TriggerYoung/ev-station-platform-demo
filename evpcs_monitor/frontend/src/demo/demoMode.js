@@ -45,6 +45,21 @@ export const initializeDemoMode = () => {
 
 export const isDemoMode = () => initializeDemoMode();
 
+export const isDemoGuestSession = () =>
+  typeof window !== "undefined" &&
+  isDemoMode() &&
+  window.localStorage.getItem(DEMO_GUEST_STORAGE_KEY) === "true" &&
+  window.localStorage.getItem("role") === "demo_guest";
+
+export const getAppRole = () => {
+  if (typeof window === "undefined") return null;
+  const role = window.localStorage.getItem("role");
+  return role === "demo_guest" ? (isDemoGuestSession() ? role : null) : role;
+};
+
+export const canViewDemoAdminPages = (role) =>
+  role === "admin" || (role === "demo_guest" && isDemoGuestSession());
+
 export const setDemoMode = (enabled) => {
   currentDemoMode = Boolean(enabled);
   if (typeof window !== "undefined") {
@@ -62,14 +77,27 @@ export const createDemoGuestSession = () => {
   if (typeof window === "undefined") return;
 
   setDemoMode(true);
-  // 现有页面以 role=admin 展示完整功能；所有写操作仍只修改内存中的 Demo 副本。
+  // 使用独立访客角色，避免演示会话被当成真实后端的管理员登录。
   window.localStorage.setItem("user_id", "9001");
-  window.localStorage.setItem("role", "admin");
+  window.localStorage.setItem("role", "demo_guest");
   window.localStorage.setItem("username", "演示访客");
   window.localStorage.setItem(DEMO_GUEST_STORAGE_KEY, "true");
+  window.dispatchEvent(new Event("ev-station-demo-guest-change"));
 };
 
 export const clearDemoGuestSession = () => {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(DEMO_GUEST_STORAGE_KEY);
+  window.dispatchEvent(new Event("ev-station-demo-guest-change"));
+};
+
+export const initializeDemoGuestFromUrl = () => {
+  if (typeof window === "undefined") return false;
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("guest") !== "1" || !isDemoMode()) return false;
+
+  createDemoGuestSession();
+  url.searchParams.delete("guest");
+  window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  return true;
 };

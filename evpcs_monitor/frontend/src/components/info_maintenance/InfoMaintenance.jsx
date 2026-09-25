@@ -15,6 +15,7 @@ import { Button, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import InfoMaintenanceRoutes from "./InfoMaintenanceRoutes"; // 引入路由组件
 import withAuth from "../withAuth"; // 引入认证组件
+import { canViewDemoAdminPages, getAppRole } from "../../demo/demoMode";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -40,7 +41,7 @@ const InfoMaintenance = () => {
 
     // 读取本地存储的角色信息
     useEffect(() => {
-        const storedRole = localStorage.getItem("role");
+        const storedRole = getAppRole();
         setRole(storedRole);
     }, []);
 
@@ -53,7 +54,7 @@ const InfoMaintenance = () => {
         { key: "/info_maintenance/business_info", icon: <CommentOutlined />, label: "合作意向信息" },
         { key: "/info_maintenance/districts", icon: <ApartmentOutlined />, label: "行政区信息" },
         // 只有角色是 admin 时才显示“系统用户管理”菜单项
-        role === "admin" && { key: "/info_maintenance/users", icon: <TeamOutlined />, label: "系统用户管理" },
+        canViewDemoAdminPages(role) && { key: "/info_maintenance/users", icon: <TeamOutlined />, label: "系统用户管理" },
     ].filter(Boolean); // 过滤掉 role 为 null 或不显示的菜单项
 
     return (

@@ -12,6 +12,7 @@ import AnalysisReport from "./components/analysis_report/AnalysisReport";
 import Business from "./components/business/Business";
 import Community from "./components/community/Community";
 import DemoModeBanner from "./demo/DemoModeBanner";
+import DemoGuestNav from "./demo/DemoGuestNav";
 
 // 路由配置数组
 const routes = [
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <Router>
       <DemoModeBanner />
+      <DemoGuestNav />
       <Routes>
         {routes.map(({ path, title, element }) => (
           <Route
