@@ -1,6 +1,6 @@
 // Intro.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Layout, Menu, Card, Button, Input, message, Typography, Row, Col, Image, Modal, FloatButton, Tour, Avatar } from "antd";
+import { Layout, Menu, Card, Button, Input, message, Typography, Row, Col, Image, Modal, FloatButton, Avatar } from "antd";
 import { UserOutlined, LoginOutlined, SearchOutlined, ExclamationCircleOutlined, ThunderboltTwoTone, ExperimentOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import maintenanceImg from "../assets/images/maintenance.jpg";
@@ -107,24 +107,6 @@ const Intro = () => {
     }
   };
 
-  // Tour相关
-  // 初始设置为未登录时才显示 Tour
-  const [tourOpen, setTourOpen] = useState(() => {
-    return !getAppRole();
-  });
-  const tourSteps = [
-    {
-      title: "登录与权限",
-      description: "点击登录按钮登录系统, 以使用更多功能",
-      target: () => document.querySelector("#loginButton"),
-    },
-    {
-      title: "搜索功能",
-      description: "在这里输入关键字, 系统将高亮当前页面的匹配内容",
-      target: () => document.querySelector("#searchInput"),
-    },
-  ];
-
   // 登出处理函数
   const handleLogout = () => {
     // 显示确认对话框
@@ -155,7 +137,6 @@ const Intro = () => {
     createDemoGuestSession();
     setRole("demo_guest");
     setUsername("演示访客");
-    setTourOpen(false);
     message.success("已进入演示访客模式，请选择下方模块体验。", 2);
   };
   // 访问控制：检查用户是否登录并根据角色判断是否允许访问模块
@@ -345,8 +326,6 @@ const Intro = () => {
         ©2025 ChargeMind Created by YOUNG
       </Footer>
 
-      {/* 漫游式引导组件 */}
-      <Tour steps={tourSteps} open={tourOpen} onClose={() => setTourOpen(false)} />
     </Layout>
   );
 };

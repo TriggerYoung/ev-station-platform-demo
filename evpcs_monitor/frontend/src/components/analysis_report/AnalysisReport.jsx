@@ -1,6 +1,6 @@
 // AnalysisReport.jsx
 import React, { useState, useEffect } from "react";
-import { Layout, Steps, Spin, Row, Col, Card, Tooltip, Button, message, Tour } from "antd";
+import { Layout, Steps, Spin, Row, Col, Card, Tooltip, Button, message } from "antd";
 import { DownloadOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
@@ -33,28 +33,6 @@ const AnalysisReport = () => {
         aggregatedVolumes: [],
     });
     const demoMode = isDemoMode();
-
-    // Tour相关
-    const [tourOpen, setTourOpen] = useState(true);
-
-    // Tour 步骤定义
-    const tourSteps = [
-        {
-            title: "上传数据",
-            description: `请上传包含time（时间，例如"2022-09-01 08:00:00"）、volume（充电量kWh） 两列的CSV文件，点击这里选择上传文件`,
-            target: () => document.querySelector("#uploadFileArea"),
-        },
-        {
-            title: "提交分析",
-            description: `选择完文件后，点击此处开始智能分析，分析过程需要时间，稍等片刻哦~`,
-            target: () => document.querySelector("#analysisButton"),
-        },
-        {
-            title: "查看分析结果",
-            description: `上传成功并分析完成后，这里会显示可视化图表和报告内容，可以下载分析结果`,
-            target: () => document.querySelector("#analysisResultArea"),
-        },
-    ];
 
     // 上传并分析
     const handleUpload = async () => {
@@ -237,7 +215,6 @@ const AnalysisReport = () => {
                     <Row gutter={16}>
                         {/* 文件上传 */}
                         <Col span={11}>
-                            {/* 添加 ID 让 Tour 能定位 */}
                             <div id="uploadFileArea">
                                 <FileUpload
                                     fileList={fileList}
@@ -390,12 +367,6 @@ const AnalysisReport = () => {
                 </div>
             </Content>
 
-            {/* 漫游式引导 */}
-            <Tour
-                steps={tourSteps}
-                open={tourOpen}
-                onClose={() => setTourOpen(false)}
-            />
         </Layout>
     );
 };

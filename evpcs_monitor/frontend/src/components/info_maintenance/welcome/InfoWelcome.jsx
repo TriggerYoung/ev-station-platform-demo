@@ -8,7 +8,6 @@ import {
     EnvironmentOutlined,
     ApartmentOutlined,
     DatabaseOutlined,
-    HeartTwoTone,
     CommentOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -112,10 +111,6 @@ const InfoWelcome = () => {
                         </Col>
                     ))}
                 </Row>
-            </Card>
-            <Card>
-                <h2><HeartTwoTone twoToneColor="#eb2f96" /> 小贴士~</h2>
-                <p>点击上方卡片可快速跳转至对应模块；系统数据定期更新，确保数据一致性。</p>
             </Card>
         </div>
     );
